@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addingQuestion } from "./actions";
-import NewQuestion from "./question";
+import axios from "axios";
 
 const NewSurvey = () => {
+    const [title, setTitle] = useState("");
     const [currentQuestions, setCurrentQuestions] = useState([]);
     const [questionsContent, setQuestionsContent] = useState({});
 
@@ -17,12 +16,20 @@ const NewSurvey = () => {
 
     const handleChange = (e) => {
         console.log("this is e", e.target);
-        // let questionContent = e.target.id;
         setQuestionsContent({
             ...questionsContent,
             [e.target.id]: e.target.value,
         });
         console.log("Questions total", questionsContent);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("Button Works");
+        axios.post("/questions-survey", {
+            title: title,
+            questions: questionsContent
+        });
     };
 
     return (
@@ -35,10 +42,12 @@ const NewSurvey = () => {
                     probably have not heard of them skateboard chartreuse
                     flexitarian.
                 </p>
-                <form>
+                <form type="post">
                     <input
                         type="text"
+                        name="title"
                         placeholder="Insert the title of your Survey"
+                        onChange={(e) => setTitle(e.target.value)}
                     ></input>
                     {currentQuestions.map((item, idx) => {
                         return (
@@ -59,6 +68,11 @@ const NewSurvey = () => {
                         );
                     })}
                     <h4 onClick={addQuestion}>add question here</h4>
+                    <input
+                        type="submit"
+                        className="button new-survey"
+                        onClick={(e) => handleSubmit(e)}
+                    />
                 </form>
             </div>
         </div>
