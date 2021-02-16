@@ -1,3 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;900&display=swap");
+
+* {
+    box-sizing: border-box;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
 body {
-    background-color: ghostwhite;
+    background-color: rgb(190, 227, 219);
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+h1, h2 {
+    font-size: 40px;
+    font-weight: 700;
+    color: rgb(137, 176, 174)
+}
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vertical {
+    flex-direction: column;
+}
+
+.general {
+    width: 100%;
+    height: 100vh;
+}
+
+.button {
+    width: auto;
+    height: 60px;
+    padding: 10px;
+    margin: 20px;
+    border: 5px solid rgb(137, 176, 174);
+    border-radius: 5px;
+    color: rgb(137, 176, 174);
+    font-weight: 900;
+}
+
+.button:hover {
+    background-color: rgb(137, 176, 174);
+    color: rgb(250, 249, 249)
+}
+
+.central {
+    width: 40%;
+    margin: 0 auto;
+    padding: 5rem;
+    background-color: rgb(250, 249, 249);
+    border-radius: 20px;
+    border: 5px solid rgb(137, 176, 174);
+}
+
+form {
+    width: 100%
+}
+
+.question input {
+    border: 5px dashed rgb(137, 176, 174);
+    margin: 20px;
+    padding: 20px;
+    width: 100%;
+    font-size: 20px;
+    background-color: rgb(250, 249, 249);
+}
+
+.delete {
+    border: 5px solid red;
+    padding: 20px;
+    width:75px;
 }
