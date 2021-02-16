@@ -4,6 +4,7 @@ const compression = require("compression");
 const path = require("path");
 const db = require("./db");
 app.use(express.json());
+const uidSafe = require("uid-safe");
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -24,8 +25,8 @@ app.post("/questions-survey", (req, res) => {
     const { title, questions } = req.body;
     let arrOfQuestions = Object.entries(questions);
     db.newSurvey(title)
-        .then(({rows}) => {
-            console.log("Added to database survey nr.", rows);
+        .then(({ rows }) => {
+            console.log("Added to database survey Nr.", rows);
             let surveyId = rows[0].id;
             for (let i = 0; i < arrOfQuestions.length; i++) {
                 db.addQuestions(
@@ -36,8 +37,18 @@ app.post("/questions-survey", (req, res) => {
                     console.log("succesfull added");
                 });
             }
+            uidSafe(18).then((uid) => {
+                console.log("This is UID", uid);
+                res.json({
+                    success: true,
+                    secretLink: uid,
+                });
+            });
         })
         .catch((error) => {
-            console.log("error inserting in db", error);
+            console.log("Error inserting in db", error);
+            res.json({
+                success: false,
+            });
         });
 });

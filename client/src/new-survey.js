@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useHistory } from "react-router";
 
 const NewSurvey = () => {
+    const history = useHistory();
+
     const [title, setTitle] = useState("");
     const [currentQuestions, setCurrentQuestions] = useState([]);
     const [questionsContent, setQuestionsContent] = useState({});
@@ -26,10 +29,16 @@ const NewSurvey = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Button Works");
-        axios.post("/questions-survey", {
-            title: title,
-            questions: questionsContent
-        });
+        axios
+            .post("/questions-survey", {
+                title: title,
+                questions: questionsContent,
+            })
+            .then(({data}) => {
+                const { secretLink } = data;
+                console.log("Answer from BackEnd", data)
+                history.push(`/results/${secretLink}`);
+            });
     };
 
     return (
