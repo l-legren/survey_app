@@ -5,6 +5,7 @@ import NewQuestion from "./question";
 
 const NewSurvey = () => {
     const [currentQuestions, setCurrentQuestions] = useState([]);
+    const [questionsContent, setQuestionsContent] = useState({});
 
     const addQuestion = () => {
         setCurrentQuestions([...currentQuestions, "new question"]);
@@ -14,9 +15,15 @@ const NewSurvey = () => {
         setCurrentQuestions([...currentQuestions].slice(0, -1));
     };
 
-    const handleChange = () => {
-        
-    }
+    const handleChange = (e) => {
+        console.log("this is e", e.target);
+        // let questionContent = e.target.id;
+        setQuestionsContent({
+            ...questionsContent,
+            [e.target.id]: e.target.value,
+        });
+        console.log("Questions total", questionsContent);
+    };
 
     return (
         <div className="container general">
@@ -37,6 +44,7 @@ const NewSurvey = () => {
                         return (
                             <div key={idx} className="question container">
                                 <input
+                                    id={idx}
                                     type="text"
                                     placeholder="Insert your question here"
                                     onChange={(e) => handleChange(e)}
