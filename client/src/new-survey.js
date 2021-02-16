@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import instance from "./axios";
 import { useHistory } from "react-router";
 
 const NewSurvey = () => {
@@ -29,15 +29,15 @@ const NewSurvey = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Button Works");
-        axios
+        instance
             .post("/questions-survey", {
                 title: title,
                 questions: questionsContent,
             })
-            .then(({data}) => {
-                const { secretLink } = data;
-                console.log("Answer from BackEnd", data)
-                history.push(`/results/${secretLink}`);
+            .then(({ data }) => {
+                const { secretLink, surveyId } = data;
+                console.log("Answer from BackEnd", data);
+                history.push(`/results/${surveyId}/${secretLink}`);
             });
     };
 

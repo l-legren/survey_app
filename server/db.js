@@ -22,3 +22,11 @@ module.exports.addQuestions = (survey_id, order, question) => {
 
     return db.query(q, params);
 };
+
+module.exports.getQuestions = (survey_id) => {
+    const q = `SELECT * FROM questions
+    WHERE survey_id = $1`;
+    const params = [survey_id];
+
+    return db.query(q, params);
+};

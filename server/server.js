@@ -3,22 +3,32 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const db = require("./db");
-app.use(express.json());
 const uidSafe = require("uid-safe");
+const csurf = require("csurf");
+const cookieSession = require("cookie-session");
+
+app.use(express.json());
+
+const cookieSessionMiddleware = cookieSession({
+    secret: "I am an hungry man",
+    maxAge: 1000 * 60 * 60 * 24 * 14,
+});
+
+app.use(cookieSessionMiddleware);
 
 app.use(express.urlencoded({ extended: false }));
 
+app.use(csurf());
+
+app.use(function (req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
+
 app.use(compression());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
-
-app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "..", "client", "index.html"));
-});
-
-app.listen(process.env.PORT || 3001, function () {
-    console.log("I'm listening.");
-});
 
 app.post("/questions-survey", (req, res) => {
     console.log("This is my req.body", req.body);
@@ -42,6 +52,7 @@ app.post("/questions-survey", (req, res) => {
                 res.json({
                     success: true,
                     secretLink: uid,
+                    surveyId: surveyId,
                 });
             });
         })
@@ -51,4 +62,27 @@ app.post("/questions-survey", (req, res) => {
                 success: false,
             });
         });
+});
+
+app.get("/get-questions/:survey", (req, res) => {
+    console.log("server woorking", req.params);
+    const { survey } = req.params;
+    db.getQuestions(survey)
+        .then(({ rows }) => {
+            // console.log("This is data from DB", rows)
+            res.json(rows);
+        })
+        .catch((error) => {
+            console.log("Error fetching questions from DB", err);
+        });
+});
+
+// NEVER COMMENT OUT THIS LINE OF CODE!!!
+
+app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+});
+
+app.listen(process.env.PORT || 3001, function () {
+    console.log("I'm listening.");
 });
