@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import instance from "./axios";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { addingSecretKey } from "./actions";
 
 const NewSurvey = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const [title, setTitle] = useState("");
     const [currentQuestions, setCurrentQuestions] = useState([]);
@@ -36,8 +39,8 @@ const NewSurvey = () => {
             })
             .then(({ data }) => {
                 const { secretLink, surveyId } = data;
-                console.log("Answer from BackEnd", data);
-                history.push(`/results/${surveyId}/${secretLink}`);
+                dispatch(addingSecretKey(secretLink));
+                history.push(`/results/${surveyId}`);
             });
     };
 

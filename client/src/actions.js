@@ -1,12 +1,6 @@
-export function addingQuestion(questions) {
+export function addingSecretKey(secretLink) {
     return {
-        type: "ADD_QUESTION",
-        questions: questions,
-    };
-}
-
-export function deletingQuestion() {
-    return {
-        type: "DELETE_QUESTION",
+        type: "ADD_SECRET_KEY",
+        secretLink: secretLink,
     };
 }

@@ -14,11 +14,11 @@ module.exports.newSurvey = (title) => {
     return db.query(q, params);
 };
 
-module.exports.addQuestions = (survey_id, order, question) => {
+module.exports.addQuestions = (survey_id, order, question, share_link) => {
     const q = `INSERT INTO 
-    questions(survey_id, order_q, question) 
-    VALUES ($1, $2, $3)`;
-    const params = [survey_id, order, question];
+    questions(survey_id, order_q, question, share_link) 
+    VALUES ($1, $2, $3, $4)`;
+    const params = [survey_id, order, question, share_link];
 
     return db.query(q, params);
 };

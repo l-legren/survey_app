@@ -21,16 +21,16 @@ const App = () => {
                     }}
                 />
                 <Route
-                    path="/results/:id/:secret"
+                    path="/results/:id"
                     render={(props) => {
                         return (
                             <Results
-                                linkURL={props.match.params.secret}
                                 surveyId={props.match.params.id}
                             />
                         );
                     }}
                 />
+                
             </BrowserRouter>
         </>
     );

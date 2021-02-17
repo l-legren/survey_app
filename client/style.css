@@ -17,10 +17,23 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-h1, h2 {
-    font-size: 40px;
+h1, h2, h3, h4, p {
     font-weight: 700;
     color: rgb(137, 176, 174)
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .container {
@@ -37,6 +50,21 @@ h1, h2 {
 .general {
     width: 100%;
     height: 100vh;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+ul * {
+    padding: 10px;
+}
+
+ul p {
+    border: 2px solid rgb(137, 176, 174);
+    border-radius: 5px;
 }
 
 .button {

@@ -31,27 +31,28 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.post("/questions-survey", (req, res) => {
-    console.log("This is my req.body", req.body);
+    // console.log("This is my req.body", req.body);
     const { title, questions } = req.body;
     let arrOfQuestions = Object.entries(questions);
     db.newSurvey(title)
         .then(({ rows }) => {
             console.log("Added to database survey Nr.", rows);
             let surveyId = rows[0].id;
-            for (let i = 0; i < arrOfQuestions.length; i++) {
-                db.addQuestions(
-                    surveyId,
-                    arrOfQuestions[i][0],
-                    arrOfQuestions[i][1]
-                ).then(() => {
-                    console.log("succesfull added");
-                });
-            }
             uidSafe(18).then((uid) => {
                 console.log("This is UID", uid);
+                for (let i = 0; i < arrOfQuestions.length; i++) {
+                    db.addQuestions(
+                        surveyId,
+                        arrOfQuestions[i][0],
+                        arrOfQuestions[i][1],
+                        uid
+                    ).then(() => {
+                        console.log("succesfull added");
+                    });
+                }
                 res.json({
                     success: true,
-                    secretLink: uid,
+                    // secretLink: uid,
                     surveyId: surveyId,
                 });
             });

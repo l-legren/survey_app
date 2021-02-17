@@ -12,6 +12,7 @@ CREATE TABLE questions (
     id SERIAL PRIMARY KEY,
     survey_id INT REFERENCES surveys(id),
     order_q INT NOT NULL,
+    share_link VARCHAR NOT NULL,
     question VARCHAR NOT NULL
   );
 
