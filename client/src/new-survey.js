@@ -54,7 +54,7 @@ const NewSurvey = () => {
                     probably have not heard of them skateboard chartreuse
                     flexitarian.
                 </p>
-                <form type="post">
+                <form method="post">
                     <input
                         type="text"
                         name="title"

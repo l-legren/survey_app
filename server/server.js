@@ -66,11 +66,11 @@ app.post("/questions-survey", (req, res) => {
 });
 
 app.get("/get-questions/:survey", (req, res) => {
-    console.log("server woorking", req.params);
+    // console.log("server woorking", req.params);
     const { survey } = req.params;
     db.getQuestions(survey)
         .then(({ rows }) => {
-            // console.log("This is data from DB", rows)
+            console.log("This is data from DB", rows)
             res.json(rows);
         })
         .catch((error) => {

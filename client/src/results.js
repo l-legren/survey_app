@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import instance from "./axios";
 import copy from "copy-to-clipboard";
 
@@ -23,7 +22,7 @@ const Results = ({ surveyId }) => {
 
     const copyToClipboard = (e) => {
         console.log("Copying to Clipboard", e.target);
-        copy(`http://localhost:3000/answers/${shareLink}`);
+        copy(`http://localhost:3000/answers/${surveyId}/${shareLink}`);
     };
 
     return (
