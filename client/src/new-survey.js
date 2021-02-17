@@ -21,12 +21,10 @@ const NewSurvey = () => {
     };
 
     const handleChange = (e) => {
-        console.log("this is e", e.target);
         setQuestionsContent({
             ...questionsContent,
             [e.target.id]: e.target.value,
         });
-        console.log("Questions total", questionsContent);
     };
 
     const handleSubmit = (e) => {

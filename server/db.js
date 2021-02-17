@@ -30,3 +30,12 @@ module.exports.getQuestions = (survey_id) => {
 
     return db.query(q, params);
 };
+
+module.exports.addAnswers = (survey_id, question_id, answer) => {
+    const q = `INSERT INTO answers
+    (survey_id, question_id, answer)
+    VALUES ($1, $2, $3)`;
+    const params = [survey_id, question_id, answer];
+
+    return db.query(q, params);
+};

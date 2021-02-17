@@ -52,7 +52,6 @@ app.post("/questions-survey", (req, res) => {
                 }
                 res.json({
                     success: true,
-                    // secretLink: uid,
                     surveyId: surveyId,
                 });
             });
@@ -66,16 +65,39 @@ app.post("/questions-survey", (req, res) => {
 });
 
 app.get("/get-questions/:survey", (req, res) => {
-    // console.log("server woorking", req.params);
     const { survey } = req.params;
     db.getQuestions(survey)
         .then(({ rows }) => {
-            console.log("This is data from DB", rows)
+            console.log("This is data from DB", rows);
             res.json(rows);
         })
         .catch((error) => {
-            console.log("Error fetching questions from DB", err);
+            console.log("Error fetching questions from DB", error);
+            res.json({
+                success: false,
+            });
         });
+});
+
+app.post("/submit-answers", (req, res) => {
+    console.log("Req Body", req.body);
+    const { surveyId, answers } = req.body;
+    let arrOfAnswers = Object.entries(answers);
+    for (let i = 0; i < arrOfAnswers.length; i++) {
+        db.addAnswers(surveyId, arrOfAnswers[i][0], arrOfAnswers[i][1])
+            .then(() => {
+                console.log("Answers added to DB");
+            })
+            .catch((err) => {
+                console.log("Error adding Answers to DB", err);
+                res.json({
+                    success: false,
+                });
+            });
+    }
+    res.json({
+        success: true,
+    });
 });
 
 // NEVER COMMENT OUT THIS LINE OF CODE!!!

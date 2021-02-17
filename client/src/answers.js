@@ -3,6 +3,7 @@ import instance from "./axios";
 
 const Answers = ({ surveyId }) => {
     const [questionsAnswers, setquestionsAnswers] = useState([]);
+    const [answers, setAnswers] = useState({});
 
     useEffect(() => {
         instance
@@ -16,7 +17,24 @@ const Answers = ({ surveyId }) => {
             });
     }, []);
 
-    console.log("Questions Survey", questionsAnswers);
+    const handleChange = (e) => {
+        setAnswers({
+            ...answers,
+            [e.target.id]: e.target.value,
+        });
+    };
+
+    const submitAnswers = (e) => {
+        e.preventDefault();
+        instance
+            .post("/submit-answers", {
+                surveyId: surveyId,
+                answers: answers,
+            })
+            .then(() => {
+                console.log("Added Answers to DB");
+            });
+    };
 
     return (
         <div className="container vertical general">
@@ -36,6 +54,8 @@ const Answers = ({ surveyId }) => {
                                         >{`Question ${idx + 1}`}</h4>
                                         <p>{item.question}</p>
                                         <input
+                                            onChange={(e) => handleChange(e)}
+                                            id={item.id}
                                             type="text"
                                             placeholder="Answer here"
                                         />
@@ -44,7 +64,12 @@ const Answers = ({ surveyId }) => {
                             </div>
                         );
                     })}
-                    <input className="button" type="submit" value='Submit'/>
+                    <input
+                        className="button"
+                        type="submit"
+                        value="Submit"
+                        onClick={(e) => submitAnswers(e)}
+                    />
                 </form>
             </div>
         </div>
