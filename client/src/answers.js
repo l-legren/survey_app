@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import instance from "./axios";
 
 const Answers = ({ surveyId }) => {
+    const history = useHistory();
     const [questionsAnswers, setquestionsAnswers] = useState([]);
     const [answers, setAnswers] = useState({});
 
@@ -33,6 +35,7 @@ const Answers = ({ surveyId }) => {
             })
             .then(() => {
                 console.log("Added Answers to DB");
+                history.push("/thanks");
             });
     };
 

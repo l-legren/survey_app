@@ -3,6 +3,7 @@ import Welcome from "./welcome";
 import NewSurvey from "./new-survey";
 import Results from "./results";
 import Answers from "./answers";
+import ThankYou from "./thanks";
 
 const App = () => {
     return (
@@ -33,7 +34,7 @@ const App = () => {
                         return <Answers surveyId={props.match.params.id} />;
                     }}
                 />
-                
+                <Route path="/thanks" render={() => <ThankYou />} />
             </BrowserRouter>
         </>
     );
